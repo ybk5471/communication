@@ -7,8 +7,8 @@ public:
 	sserver();
 	~sserver();
 
-	void send();
-	void receive();
+	size_t send();
+	size_t receive();
 
 	void dispose();
 };
