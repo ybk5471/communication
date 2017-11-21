@@ -1,6 +1,6 @@
 #include "sserver.hpp"
 
-sserver::sserver()
+sserver::sserver(uint16_t port)
 : pl(::socket(AF_INET, SOCKET_STREAM, 0), uint32_t(::EPOLLIN)) {
 	int opt = 1;
 
@@ -14,7 +14,7 @@ sserver::sserver()
 	memset(&servaddr, 0, sizeof(servaddr));
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-	servaddr.sin_port = htons(DEFAULT_PORT);
+	servaddr.sin_port = htons(port);
 	ret = ::bind(this->_fd(), (struct servaddr *)&servaddr, sizeof(servaddr))
 	validate_ret(ret, "bind");
 
