@@ -2,10 +2,10 @@
 
 sserver::sserver(uint16_t port)
 : pl(::socket(AF_INET, SOCKET_STREAM, 0), uint32_t(::EPOLLIN)) {
-	int opt = 1;
+	int ret = 0;
 
 	//reuse address when TIME_WAIT
-	int ret = 0;
+	int opt = 1;
 	ret = ::setsockopt(this->_fd(), SOL_SOCKET, SO_REUSEADDR, (void *)&opt, sizeof(opt))
 	validate_ret(ret, "setsockopt, reuseaddr");
 
@@ -15,7 +15,7 @@ sserver::sserver(uint16_t port)
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
 	servaddr.sin_port = htons(port);
-	ret = ::bind(this->_fd(), (struct servaddr *)&servaddr, sizeof(servaddr))
+	ret = ::bind(this->_fd(), (struct sockaddr *)&servaddr, sizeof(servaddr))
 	validate_ret(ret, "bind");
 
 	//listen
